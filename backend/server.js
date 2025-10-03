@@ -1,24 +1,19 @@
 // server.js
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
-import dotenv from "dotenv";
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const path = require("path");
+const dotenv = require("dotenv");
 
-import connectDB from "./config/db.js";
-import authRoutes from "./routes/authRoutes.js";
-import incomeRoutes from "./routes/incomeRoutes.js";
-import expenseRoutes from "./routes/expenseRoutes.js";
-import dashboardRoutes from "./routes/dashboardRoutes.js";
+const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
+const incomeRoutes = require("./routes/incomeRoutes");
+const expenseRoutes = require("./routes/expenseRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
 
 dotenv.config();
 
 const app = express();
-
-// ---------------- Setup __dirname cho ESM ----------------
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // ---------------- Middleware ----------------
 app.use(express.json());
@@ -41,15 +36,16 @@ app.use("/api/v1/dashboard", dashboardRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // ---------------- Serve frontend build (production) ----------------
-if (process.env.NODE_ENV === "production") {
-  const frontendPath = path.join(__dirname, "../frontend/expense-tracker/dist");
-  app.use(express.static(frontendPath));
+const frontendPath = path.join(__dirname, "../frontend/expense-tracker/dist");
+app.use(express.static(frontendPath));
 
-  // SPA fallback: mọi route không khớp API trả về index.html
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(frontendPath, "index.html"));
-  });
-}
+// SPA fallback: mọi route không khớp API trả về index.html
+app.get("*", (req, res) => {
+  if (req.path.startsWith("/api")) {
+    return res.status(404).json({ message: "API route not found" });
+  }
+  res.sendFile(path.join(frontendPath, "index.html"));
+});
 
 // ---------------- Start server ----------------
 const PORT = process.env.PORT || 5000;
