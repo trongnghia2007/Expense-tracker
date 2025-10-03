@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "expensetracker": "file:.."
+  },
+  "name": "frontend",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm run dev --prefix expense-tracker",
+    "build": "npm run build --prefix expense-tracker",
+    "preview": "npm run preview --prefix expense-tracker"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

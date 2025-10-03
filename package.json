@@ -4,5 +4,25 @@
     "@emoji-mart/react": "^1.1.1",
     "@tailwindcss/vite": "^4.1.13",
     "tailwindcss": "^4.1.13"
-  }
+  },
+  "name": "expensetracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "build": "npm install --prefix backend && npm install --prefix frontend/expense-tracker && npm run build --prefix frontend/expense-tracker",
+    "start": "npm run build && npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trongnghia2007/Expense-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trongnghia2007/Expense-tracker/issues"
+  },
+  "homepage": "https://github.com/trongnghia2007/Expense-tracker#readme"
 }
